@@ -1,5 +1,4 @@
 
-
 // LinkedList class should go in the "ufl_cap4053::fundamentals" namespace!
 namespace ufl_cap4053
 {
@@ -15,7 +14,7 @@ namespace ufl_cap4053
                 T data;
                 Node *next, *prev;
 
-                Node(const T &d, Node *n = nullptr, Node *p = nullptr) : data(d), next(n), prev(p) {}
+                explicit Node(const T &d, Node *n = nullptr, Node *p = nullptr) : data(d), next(n), prev(p) {}
             };
 
             Node *head;
@@ -32,7 +31,7 @@ namespace ufl_cap4053
             {
             public:
                 Node *current;
-                Iterator(Node *curr) : current(curr) {}
+                explicit Iterator(Node *curr) : current(curr) {}
 
                 // returns the element the iterator is pointing to
                 T operator*() const { return current->data; }
@@ -65,7 +64,7 @@ namespace ufl_cap4053
             Iterator begin() const { return Iterator(head); }
 
             // return iterator pointing to the end of the list
-            Iterator end() const { return Iterator(tail->next); }
+            Iterator end() const { return Iterator(nullptr); }
 
             /*****************************************************************************************/
             /*****************************************************************************************/
@@ -75,8 +74,8 @@ namespace ufl_cap4053
 
             // return true if the list is empty
             bool isEmpty() const { return size == 0; }
-            // returns true if the list contains node->data == element
 
+            // returns true if the list contains node->data == element
             bool contains(const T &element) const
             {
                 Node *node = head;
@@ -95,14 +94,12 @@ namespace ufl_cap4053
             /*****************************************************************************************/
             /*****************************************************************************************/
 
-            // returns the number of elements in the list
-            int getSize() const { return size; }
 
             // returns the first element in the list
-            T getFront() const { return head->data; }
+            T getFront() const { if (!isEmpty()) return head->data; }
 
             // returns the last element in the list
-            T getBack() const { return tail->data; }
+            T getBack() const { if (!isEmpty()) return tail->data; }
 
             /*****************************************************************************************/
             /*****************************************************************************************/
